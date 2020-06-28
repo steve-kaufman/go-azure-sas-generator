@@ -13,41 +13,41 @@ import (
 
 // TokenOptions contains the options for the token generated
 type TokenOptions struct {
-  signedPermissions string
-  signedStart string
-  signedExpiry string
-  canonicalizedResource string
-  signedIdentifier string
-  signedIP string
-  signedProtocol string
-  signedVersion string
-  signedResource string
-  signedSnapshotTime string
-  rscc string
-  rscd string
-  rsce string
-  rscl string
-  rsct string
+  SignedPermissions string
+  SignedStart string
+  SignedExpiry string
+  CanonicalizedResource string
+  SignedIdentifier string
+  SignedIP string
+  SignedProtocol string
+  SignedVersion string
+  SignedResource string
+  SignedSnapshotTime string
+  Rscc string
+  Rscd string
+  Rsce string
+  Rscl string
+  Rsct string
 }
 
 // GenerateToken returns a token using the given resource URI and access key
 func GenerateToken(options *TokenOptions, sasKey string) string {
 
-  stringToSign := options.signedPermissions + "\n" +
-                  options.signedStart + "\n" +
-                  options.signedExpiry + "\n" +
-                  options.canonicalizedResource + "\n" +
-                  options.signedIdentifier + "\n" +
-                  options.signedIP + "\n" +
-                  options.signedProtocol + "\n" +
-                  options.signedVersion + "\n" +
-                  options.signedResource + "\n" +
-                  options.signedSnapshotTime + "\n" +
-                  options.rscc + "\n" +
-                  options.rscd + "\n" +
-                  options.rsce + "\n" +
-                  options.rscl + "\n" +
-                  options.rsct
+  stringToSign := options.SignedPermissions + "\n" +
+                  options.SignedStart + "\n" +
+                  options.SignedExpiry + "\n" +
+                  options.CanonicalizedResource + "\n" +
+                  options.SignedIdentifier + "\n" +
+                  options.SignedIP + "\n" +
+                  options.SignedProtocol + "\n" +
+                  options.SignedVersion + "\n" +
+                  options.SignedResource + "\n" +
+                  options.SignedSnapshotTime + "\n" +
+                  options.Rscc + "\n" +
+                  options.Rscd + "\n" +
+                  options.Rsce + "\n" +
+                  options.Rscl + "\n" +
+                  options.Rsct
 
   fmt.Println("String to sign: " + stringToSign)
 
@@ -55,11 +55,11 @@ func GenerateToken(options *TokenOptions, sasKey string) string {
 	sig := template.URLQueryEscaper(rawSig)
 
 	return fmt.Sprintf("sv=%s&sp=%s&sr=%s&spr=%s&se=%s&sig=%s",
-    options.signedVersion,
-    options.signedPermissions,
-    options.signedResource,
-    options.signedProtocol,
-    options.signedExpiry,
+    options.SignedVersion,
+    options.SignedPermissions,
+    options.SignedResource,
+    options.SignedProtocol,
+    options.SignedExpiry,
     sig)
 }
 
