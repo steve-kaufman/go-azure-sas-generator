@@ -29,7 +29,7 @@ type TokenOptions struct {
 	Rsct                  string
 }
 
-// GenerateToken returns a token using the given resource URI and access key
+// GenerateToken returns a token using the given content URI and access key
 func GenerateToken(options *TokenOptions, sasKey string) string {
 
 	stringToSign := options.SignedPermissions + "\n" +
@@ -64,7 +64,8 @@ func GenerateToken(options *TokenOptions, sasKey string) string {
 		sig)
 }
 
-// GenerateSignedExpiry returns a valid expiration string in x minutes
+// GenerateSignedExpiry returns a valid expiration string x minutes from now
+// The expiration string is in UTC, formatted in RFC3339 (YYYY-MM-DDThh:mm:ssZ)
 func GenerateSignedExpiry(minutes int) string {
 	// Format expire time
 	expireTime := time.Now().Add(time.Duration(minutes) * time.Minute)
@@ -88,7 +89,8 @@ func getHmac256(str string, secret string) string {
 	if err != nil {
 		fmt.Println("Error QueryUnescape-ing string to sign")
 	}
-	key := []byte(secret)
+	data, _ := base64.StdEncoding.DecodeString(secret)
+	key := []byte(data)
 	h := hmac.New(sha256.New, key)
 	h.Write([]byte(str))
 	return base64.StdEncoding.EncodeToString(h.Sum(nil))
