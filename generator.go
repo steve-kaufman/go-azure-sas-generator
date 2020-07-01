@@ -48,10 +48,7 @@ func GenerateToken(options *TokenOptions, sasKey string) string {
 		options.Rscl + "\n" +
 		options.Rsct
 
-	fmt.Println("String to sign: " + stringToSign)
-
 	rawSig := getHmac256(stringToSign, sasKey)
-	fmt.Println("Raw sig: " + rawSig)
 
 	sig := template.URLQueryEscaper(rawSig)
 
@@ -75,11 +72,7 @@ func GenerateSignedExpiry(minutes int) string {
 
 // GenerateCanonicalizedResource returns a canonicalized resource string
 func GenerateCanonicalizedResource(uri string, service string) string {
-	u, err := url.Parse(uri)
-
-	if err != nil {
-		panic(err)
-	}
+	u, _ := url.Parse(uri)
 
 	return "/blob/" + service + u.Path
 }
